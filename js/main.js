@@ -284,7 +284,7 @@ var app = new Vue({
 
                   self.showTxt(
                     'Mysterious Figure',
-                    `Well yeah, that's what i've been trying to tell you.
+                    `Well yeah, that's what I've been trying to tell you.
                     You did not ever TRULY OWN those items!`, ()=>{
 
                       self.showTxt(
@@ -297,7 +297,7 @@ var app = new Vue({
                           One-of-a-kind items like artwork, a virtual pet, or this sword are examples of things that can be ~2non-fungible tokens~/.`, ()=>{
                             self.showTxt(
                               self.player.name,
-                              `But how was it IN the game?`, ()=>{
+                              `But how was it IN that game that was deleted?`, ()=>{
 
                               self.showTxt(
                                 'Mysterious Figure',
@@ -324,8 +324,8 @@ var app = new Vue({
                                               self.showTxt(
                                                 'Mysterious Figure',
                                                 `Oh, you can sell it on a marketplace for cash or use it in another game built on top of the BLOCKCHAIN. ~~
-                                                ~~
-                                                Come with me, noble ~1${self.player.name}, the ${self.player.class}~/ I'll show you!`, ()=>{
+~~
+Come with me, noble ~1${self.player.name}, the ${self.player.class}~/ I'll show you!`, ()=>{
 
                                                 let mcfOut = gsap.timeline({
                                                   repeat: 0,
