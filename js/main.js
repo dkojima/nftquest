@@ -39,7 +39,7 @@ var app = new Vue({
       class: '',
       hue: 0,
 
-      x:0,
+      x:800,
       y:0,
       sx:0,
       sy:0
@@ -63,7 +63,7 @@ var app = new Vue({
     blockChainBG: false,
     blockChainShowing: false,
 
-    charInt: 10,
+    charInt: 25,
 
     txtBoxTitle: '',
     txtBoxMsg: '',
@@ -216,7 +216,7 @@ var app = new Vue({
                     self.showTxt(
                       'Mysterious Figure',
                       `It's an ~2NFT SWORD~/! ~~ ~~ Unlike any other possession in this game,
-                      an item that is tied to NFT, or a ~2Non-Fungible Token~/ has...~~
+                      an item that is tied to NFT, or a ~2Non-Fungible Token~/ grants its owner...~~
                       TRUE OWNERSHIP`, ()=>{
 
                       self.showTxt(
