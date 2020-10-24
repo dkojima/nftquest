@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+:root {
+  --tile-size: 64px;
+}
+
+* {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+body {
+  background: #212529;
+  margin: 0;
+  font-family: "Press Start 2P", sans-serif;
+}
+
+#app {
+  width: 800px;
+  height: 600px;
+  margin: 100px auto;
+  position: relative;
+  overflow: hidden;
+}
+
+#charSelectScreen {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  position: absolute;
+  padding: 50px 50px;
+  background-image: url("/gfx/map/bricks.png");
+  background-size: var(--tile-size);
+  color: #fff;
+}
+#charSelectScreen.closed {
+  opacity: 0;
+  pointer-events: none;
+}
+#charSelectScreen .charSprite {
+  transform: scale(3);
+  min-height: 0;
+}
+
+#txtBox {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 99999;
+  background-color: #212529;
+  pointer-events: none;
+}
+
+.forest {
+  height: 100%;
+  width: 100%;
+  background-image: url("/gfx/map/grass.png");
+  background-size: var(--tile-size);
+  overflow: hidden;
+  position: relative;
+}
+.forest .tree {
+  display: inline-block;
+  position: absolute;
+  width: var(--tile-size);
+  height: var(--tile-size);
+  opacity: 1;
+  background-image: url("/gfx/map/tree.png");
+  background-size: var(--tile-size);
+}
+
+#blockChainBG {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-color: black;
+  background-size: cover;
+  opacity: 0;
+}
+#blockChainBG.show {
+  opacity: 1;
+  background-color: black;
+}
+#blockChainBG.open {
+  z-index: 1;
+  background-image: url("/gfx/blockchain.jpg");
+  background-size: cover;
+}
+
+#sword {
+  position: absolute;
+  top: 0;
+  z-index: 9999;
+  top: 211px;
+  left: 612px;
+  opacity: 0;
+  transform: scale(2);
+  pointer-events: none;
+}
+#sword.show {
+  opacity: 1;
+}
+
+#player, #mcf, #villager {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  background-size: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#player img, #mcf img, #villager img {
+  position: relative;
+  transform: scale(2);
+}
+
+.blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+.glow {
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0px 0px 7px #aef4af);
+  }
+  to {
+    filter: drop-shadow(0px 0px -7px #aef4af);
+  }
+}
+.nftglow {
+  animation: nftglow 1s infinite alternate;
+}
+
+@keyframes nftglow {
+  from {
+    filter: drop-shadow(0px 0px 20px magenta);
+  }
+  to {
+    filter: drop-shadow(0px 0px 0px magenta);
+  }
+}
+
+/*# sourceMappingURL=main.css.map */

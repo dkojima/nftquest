@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NFT</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/grid.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <h1 style="color: white;text-align:center;padding-top:50px;">NFT Quest</h1>
+  <div id="app">
+    <div id="charSelectScreen" ref="charSelectScreen">
+      <div class="nes-field is-inline">
+        <label for="name_field">Name</label>
+        <input type="text" id="name_field" class="nes-input is-dark" v-model="player.name">
+      </div>
+
+      <div class="row">
+        <div class="col s12 m7" style="padding: 20px; text-align: center;">
+          <div class="nes-container is-dark with-title" style="background: transparent;">
+            <p class="title">Select your Class</p>
+
+            <div class="nes-select is-dark">
+              <select required id="default_select" v-model="player.class" @change="player.hue = hues[Math.floor(Math.random() * hues.length)]">
+                <option value="" disabled selected hidden>Random</option>
+                <option v-for="c in classes" :value="c">
+                  {{c}}
+                </option>
+              </select>
+            </div>
+            <br><br>
+            <div style="color: black; min-height: 200px;" >
+              <div  v-if="player.class">
+                <div class="glow" style="display:inline-block;">
+                  <img :src="`/gfx/player/${player.class.replace(/ /g, '').toLowerCase()}.png`" class="charSprite" :style="{
+                    filter: `hue-rotate(${player.hue}deg)`,
+                  }">
+                </div>
+                <br>
+                <br>
+                <br>
+                <a class="nes-btn" @click="()=>{
+                  hueI--;
+                  if(hueI < 0) { hueI = hues.length - 1};
+                  player.hue = hues[hueI];
+                }">&lt;</a>
+                <a class="nes-btn" @click="()=>{
+                  hueI++;
+                  if(hueI >= hues.length) { hueI = 0};
+                  player.hue = hues[hueI];
+                }">&gt;</a>
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </div>
+        <div class="col s12 m5" style="text-align: center; padding: 30px 10px;">
+          This experience takes only about 5 minutes<br><br>
+          <button type="button" class="nes-btn is-success" @click="()=>{
+
+            if(player.name.trim() == '') {
+              player.name = 'Unnamed Hero'
+            }
+            if(player.class == '') {
+              player.class = classes[Math.floor(Math.random() * classes.length)]
+              player.hue = hues[Math.floor(Math.random() * hues.length)]
+            }
+            firstScene()
+          }">Start!</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="forest" :style="{
+      backgroundPosition: `${scene.forestBgPos}px`
+    }" @click="()=>{
+      if(txtBoxDone){
+        txtBoxNext()
+      }
+    }">
+      <div class="trees" v-if="!blockChainBG">
+        <div class="tree"
+          v-for="t in scene.trees"
+          :style="{
+            top: `${t.y}px`,
+            left: `${t.x}px`,
+            zIndex: t.y
+          }"
+        ></div>
+      </div>
+    </div>
+    <div id="sword" class="nftglow" :class="{show: swordVisible}">
+      <img src="/gfx/sword.png" alt="">
+    </div>
+    <div id="player" ref="pd" v-if="player.class" :style="{
+      top: `${player.y}px`,
+      left: `${player.x}px`,
+      zIndex: player.y
+    }">
+      <img :src="`/gfx/player/${player.class.replace(/ /g, '').toLowerCase()}.png`" :style="{
+        filter: `hue-rotate(${player.hue}deg)`,
+        top: `${player.sy}px`,
+        left: `${player.sx}px`
+      }">
+    </div>
+    <div id="mcf" ref="mcf" :style="{
+      top: `${mcf.y}px`,
+      left: `${mcf.x}px`,
+      zIndex: mcf.y
+    }">
+      <img :src="`/gfx/player/monk.png`" :style="{
+        top: `${mcf.sy}px`,
+        left: `${mcf.sx}px`
+      }">
+    </div>
+    <div id="villager" ref="villager"  v-if="!blockChainBG" :style="{
+      top: `${villager.y}px`,
+      left: `${villager.x}px`,
+      zIndex: villager.y
+    }">
+      <img :src="`/gfx/player/villager.png`" :style="{
+        top: `${villager.sy}px`,
+        left: `${villager.sx}px`
+      }">
+    </div>
+
+    <div id="blockChainBG" :class="{show: blockChainBG, open: blockChainShowing}"></div>
+
+    <div id="txtBox" class="nes-container with-title is-rounded is-dark" :style="{
+      opacity: txtBoxShow ? 1 : 0
+    }">
+      <p class="title" v-if="txtBoxTitle" :style="{float: txtFloatRight ? 'right': 'none'}">{{txtBoxTitle}}</p>
+      <p v-html="txtBoxMsg"></p>
+      <p v-if="txtBoxDone" style="float:right;" class="blink">
+        click to continue
+      </p>
+    </div>
+
+    <dialog class="nes-dialog is-dark is-rounded" id="dialog-dark-rounded" ref="finDialog" style="transform: scale(0.75);">
+      <form method="dialog" style="text-align: center;">
+        <p class="title">THE END</p>
+
+        <div v-if="player.class" :style="{
+        }">
+          <img :src="`/gfx/player/${player.class.replace(/ /g, '').toLowerCase()}.png`" :style="{
+            filter: `hue-rotate(${player.hue}deg)`,
+            height: '128px',
+            width: '128px'
+          }">
+        </div>
+
+        <p>Thank you,<br><br><span style="color:cyan;">{{player.name}}, the {{player.class}}</span>
+          <br>
+          <br>for playing this presentation.<br>To know more about NFTs, <a href="https://duckduckgo.com/?q=non+fungible+token" target="_blank">click here</a>.</p>
+        <br><br>
+        NFT QUEST was developed for<br> the
+        <a href="https://gitcoin.co/issue/metacartel/untitled-hackathon/6/100023901">
+          Untitled NFT Hackathon
+        </a>
+        <br><br>
+        <menu class="dialog-menu">
+          <a href="https://dkojima.github.io/nftquest">
+          <button class="nes-btn">
+            <i class="nes-icon github is-medium"></i>
+            check the source</button>
+          </a>
+          <!-- <button class="nes-btn is-primary">Confirm</button> -->
+        </menu>
+
+        <div style="color: gray; font-size: 10px;text-align:center;">
+          Sprites from <a href="http://pousse.rapiere.free.fr/tome/#">TomeTik</a>
+        </div>
+      </form>
+    </dialog>
+  </div>
+
+  <script src="/js/main.js" charset="utf-8"></script>
+</body>
+</html>
