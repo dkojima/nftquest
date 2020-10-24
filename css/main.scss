@@ -17,7 +17,7 @@ body {
   width: 800px;
   height: 600px;
 
-  margin: 100px auto;
+  margin: 60px auto;
 
   position: relative;
   overflow: hidden;
@@ -35,7 +35,7 @@ body {
   z-index: 99;
   position: absolute;
   padding: 50px 50px;
-  background-image: url('gfx/map/bricks.png');
+  background-image: url('../gfx/map/bricks.png');
   background-size: var(--tile-size);
   color: #fff;
 
@@ -56,7 +56,7 @@ body {
   height: 100%;
   width: 100%;
 
-  background-image: url('gfx/map/grass.png');
+  background-image: url('../gfx/map/grass.png');
   background-size: var(--tile-size);
   overflow: hidden;
   position: relative;
@@ -67,7 +67,7 @@ body {
     width: var(--tile-size);
     height: var(--tile-size);
     opacity:1;
-    background-image: url('gfx/map/tree.png');
+    background-image: url('../gfx/map/tree.png');
     background-size: var(--tile-size);
   }
 }
@@ -89,7 +89,7 @@ body {
   }
   &.open {
     z-index: 1;
-    background-image: url('gfx/blockchain.jpg');
+    background-image: url('../gfx/blockchain.jpg');
     background-size: cover;
   }
 }
